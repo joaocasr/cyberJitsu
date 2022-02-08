@@ -87,13 +87,13 @@ main = do
          (estadoGlossInicial
              [
               (Chao, (chao,(0,0))),
+              (Porta,((Scale 0.25 0.25 door), (6.25 , 6.25))),
               (Bloco Wall, ((Scale 0.25 0.25 wall), (6.25,6.25))),
               (Bloco Cancela, ((Scale 0.25 0.25 cancela), (6.25,6.25))),
               (Bloco Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25))),
               (Railway, ((Scale 0.25 0.25 cferreos), (6.25,6.25))),
               (Umbrella, ((Scale 0.25 0.25 guarda), (6.25,6.25))),
-              (Agua, ((Scale 0.25 0.25 water), (6.25,6.25))),
-              (Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25)))
+              (Agua, ((Scale 0.25 0.25 water), (6.25,6.25)))
              ]
          )
          desenhaEstadoGloss

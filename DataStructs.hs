@@ -21,7 +21,7 @@ data Direcao
 type Posicao = (Int,Int)
 
 data Parede = Wall -- "+"
-            | Agua -- "A"
+            | Semaforo -- "A"
             | Cancela -- "-"
   deriving (Read,Show,Eq,Enum,Bounded)
 
@@ -31,7 +31,7 @@ data Peca
     = Bloco Parede  
     | Chao -- " "
     | Porta -- "p"
-    | Semaforo -- "O"
+    | Agua -- "O"
     | Railway -- "#"
     | Umbrella -- "G"
   deriving (Read,Show,Eq)
