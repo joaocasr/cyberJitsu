@@ -41,7 +41,7 @@ dm = FullScreen
 l :: Float
 l = 12.5
 
-desenhaPeca :: Float -> Float -> Peca -> Textures
+desenhaPeca :: Float -> Float -> Peca -> Textures-> Picture
 desenhaPeca x y peca textures = Translate realX realY texture
     where tuple = (fromJust . lookup peca) textures
           texture = fst tuple
@@ -49,7 +49,7 @@ desenhaPeca x y peca textures = Translate realX realY texture
           realY = ((+y) . snd . snd) tuple
 
 
-desenhaLinha :: Float -> Float -> [Peca] -> Textures -> Picture
+desenhaLinha :: Float -> Float -> [Peca] -> Textures -> [Picture]
 desenhaLinha x y (h:t) textures = peca : resto
              where peca  = desenhaPeca x y h textures
                    resto = desenhaLinha (x+l) y t textures
@@ -74,13 +74,26 @@ chao = Color black (Polygon [(0,0),(l,0),(l,l),(0,l),(0,0)])
 
 main :: IO()
 main = do
-    --cameramen <- loadBMP "img/image1.bmp"
+    wall <- loadBMP "img/wall.bmp"
+    door <- loadBMP "img/porta.bmp"
+    cferreos <- loadBMP "img/railway.bmp"
+    guarda <- loadBMP "img/umbrella.bmp"
+    semaforo <- loadBMP "img/semaforo.bmp"
+    water <- loadBMP "img/water.bmp"
+    cancela <- loadBMP "img/cancela.bmp"
     play dm
          black
          fr
          (estadoGlossInicial
              [
-              (Chao, (chao,(0,0)))
+              (Chao, (chao,(0,0))),
+              (Bloco Wall, ((Scale 0.25 0.25 wall), (6.25,6.25))),
+              (Bloco Cancela, ((Scale 0.25 0.25 cancela), (6.25,6.25))),
+              (Bloco Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25))),
+              (Railway, ((Scale 0.25 0.25 cferreos), (6.25,6.25))),
+              (Umbrella, ((Scale 0.25 0.25 guarda), (6.25,6.25))),
+              (Agua, ((Scale 0.25 0.25 water), (6.25,6.25))),
+              (Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25)))
              ]
          )
          desenhaEstadoGloss
