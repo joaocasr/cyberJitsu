@@ -1,4 +1,4 @@
-module DataStructs where
+module Structs where
 
 
 

@@ -1,6 +1,6 @@
 module Maps where
 
-import DataStructs
+import Structs
 import Functions
 
 

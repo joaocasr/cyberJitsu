@@ -3,7 +3,7 @@ module Main where
 
 import System.Random
 import Functions
-import DataStructs
+import Structs
 import Maps
 import Data.Maybe
 import Graphics.Gloss

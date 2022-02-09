@@ -1,6 +1,6 @@
 module Functions where
 
-import DataStructs
+import Structs
 
 getList :: Int -> [a] -> a
 getList n l = (!!) l n
