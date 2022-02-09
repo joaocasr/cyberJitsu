@@ -23,6 +23,7 @@ type Posicao = (Int,Int)
 data Parede = Wall -- "+"
             | Semaforo -- "A"
             | Cancela -- "-"
+            | Caminho -- "C"
   deriving (Read,Show,Eq,Enum,Bounded)
 
 type Labirinto  = [[Peca]]
@@ -34,6 +35,7 @@ data Peca
     | Agua -- "O"
     | Railway -- "#"
     | Umbrella -- "G"
+    | Banheira
   deriving (Read,Show,Eq)
 
 

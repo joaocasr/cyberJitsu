@@ -14,10 +14,10 @@ import Graphics.Gloss.Interface.Pure.Game
 type PosicaoGloss = (Float,Float)
 
 altura :: Float
-altura = 525
+altura = 450
 
 comprimento :: Float
-comprimento = (-940)
+comprimento = (-950)
 
 type Textures = [(Peca, (Picture, (Float, Float)))]
 type EstadoGloss = (Estado, Textures)
@@ -53,7 +53,7 @@ desenhaLinha :: Float -> Float -> [Peca] -> Textures -> [Picture]
 desenhaLinha x y (h:t) textures = peca : resto
              where peca  = desenhaPeca x y h textures
                    resto = desenhaLinha (x+l) y t textures
-
+desenhaLinha _ _ _ _     = []
 
 desenhaMapa :: Float -> Float -> Labirinto -> Textures -> [Picture]
 desenhaMapa x y (h:t) textures = linha ++ resto
@@ -74,13 +74,15 @@ chao = Color black (Polygon [(0,0),(l,0),(l,l),(0,l),(0,0)])
 
 main :: IO()
 main = do
-    wall <- loadBMP "img/wall.bmp"
+    wall <- loadBMP "img/parede.bmp"
     door <- loadBMP "img/porta.bmp"
-    cferreos <- loadBMP "img/railway.bmp"
-    guarda <- loadBMP "img/umbrella.bmp"
-    semaforo <- loadBMP "img/semaforo.bmp"
-    water <- loadBMP "img/water.bmp"
+    cferreos <- loadBMP "img/cferreos.bmp"
+    guarda <- loadBMP "img/guarda.bmp"
+    semaforo <- loadBMP "img/semafro.bmp"
+    water <- loadBMP "img/agua.bmp"
     cancela <- loadBMP "img/cancela.bmp"
+    banheira <- loadBMP "img/banheira.bmp"
+    caminho <- loadBMP "img/caminhosk.bmp"
     play dm
          black
          fr
@@ -91,10 +93,12 @@ main = do
               (Bloco Wall, ((Scale 0.25 0.25 wall), (6.25,6.25))),
               (Bloco Cancela, ((Scale 0.25 0.25 cancela), (6.25,6.25))),
               (Bloco Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25))),
-              (Railway, ((Scale 0.25 0.25 cferreos), (6.25,6.25))),
-              (Umbrella, ((Scale 0.25 0.25 guarda), (6.25,6.25))),
-              (Agua, ((Scale 0.25 0.25 water), (6.25,6.25)))
-             ]
+              (Railway, ((Scale 0.3 0.3 cferreos), (6.25,6.25))),
+              (Umbrella, ((Scale 0.4 0.4 guarda), (6.25,6.25))),
+              (Agua, ((Scale 0.5 0.5 water), (6.25,6.25))),
+              (Bloco Caminho, ((Scale 1.5 1.5 caminho), (6.25, 6.25))),
+              (Banheira, ((Scale 0.24 0.25 banheira),(6.25 , 6.25))) 
+            ]
          )
          desenhaEstadoGloss
          reageEventoGloss
