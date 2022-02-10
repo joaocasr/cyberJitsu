@@ -26,6 +26,6 @@ git clone https://github.com/joaocasr/cyberJitsu
 
     
 ## Estado atual do Mapa
-  <img src = "img/mapa.png" width=800>
+  <img src = "src/img/mapa.png" width=750>
 
 <!--te-->
