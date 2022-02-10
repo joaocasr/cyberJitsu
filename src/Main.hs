@@ -79,10 +79,12 @@ main = do
     cferreos <- loadBMP "img/cferreos.bmp"
     guarda <- loadBMP "img/guarda.bmp"
     semaforo <- loadBMP "img/semafro.bmp"
-    water <- loadBMP "img/agua.bmp"
+ --   water <- loadBMP "img/agua.bmp"
     cancela <- loadBMP "img/cancela.bmp"
-    banheira <- loadBMP "img/banheira.bmp"
-    caminho <- loadBMP "img/caminhosk.bmp"
+    --banheira <- loadBMP "img/banheira.bmp"
+    Just caminho <- loadJuicy "img/original.bmp"
+    Just passeio <- loadJuicy "img/original2.bmp"
+   -- caminhooo <- loadBMP "img/shiki3.bmp"
     play dm
          black
          fr
@@ -90,14 +92,16 @@ main = do
              [
               (Chao, (chao,(0,0))),
               (Porta,((Scale 0.25 0.25 door), (6.25 , 6.25))),
-              (Bloco Wall, ((Scale 0.25 0.25 wall), (6.25,6.25))),
+              (Bloco Wall, ((Scale 0.26 0.26 wall), (6.25,6.25))),
               (Bloco Cancela, ((Scale 0.25 0.25 cancela), (6.25,6.25))),
               (Bloco Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25))),
               (Railway, ((Scale 0.3 0.3 cferreos), (6.25,6.25))),
-              (Umbrella, ((Scale 0.4 0.4 guarda), (6.25,6.25))),
-              (Agua, ((Scale 0.5 0.5 water), (6.25,6.25))),
-              (Bloco Caminho, ((Scale 1.5 1.5 caminho), (6.25, 6.25))),
-              (Banheira, ((Scale 0.24 0.25 banheira),(6.25 , 6.25))) 
+              (Umbrella, ((Scale 0.9 0.8 guarda), (6.25,6.25))),
+   --           (Agua, ((Scale 0.5 0.5 water), (6.25,6.25))),
+              (Bloco Caminho, ((Scale 1 1 caminho), (1.25, 1.25))),
+              (Bloco Passeio, ((Scale 1 1 passeio), (1.25, 1.25)))
+    --          (Bloco Caminhooo, ((Scale 1 1 caminhooo), (6.25, 6.25))),
+  --            (Banheira, ((Scale 0.24 0.25 banheira),(6.25 , 6.25))) 
             ]
          )
          desenhaEstadoGloss

@@ -24,6 +24,8 @@ data Parede = Wall -- "+"
             | Semaforo -- "A"
             | Cancela -- "-"
             | Caminho -- "C"
+            | Passeio -- "S"
+       --     | Caminhooo -- "L"
   deriving (Read,Show,Eq,Enum,Bounded)
 
 type Labirinto  = [[Peca]]
@@ -32,10 +34,10 @@ data Peca
     = Bloco Parede  
     | Chao -- " "
     | Porta -- "p"
-    | Agua -- "O"
+ --   | Agua -- "O"
     | Railway -- "#"
     | Umbrella -- "G"
-    | Banheira
+ --   | Banheira
   deriving (Read,Show,Eq)
 
 
