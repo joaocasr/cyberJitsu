@@ -1,6 +1,7 @@
 module Main where
 
-
+import System.IO (stdin, hSetEcho, hSetBuffering, BufferMode(NoBuffering), hReady)
+import Control.Monad (when)
 import System.Random
 import Functions
 import Structs
@@ -20,11 +21,13 @@ comprimento :: Float
 comprimento = (-950)
 
 type Textures = [(Peca, (Picture, (Float, Float)))]
-type EstadoGloss = (Estado, Textures)
+type Armas    = [(Guns, Picture)]
+type EstadoGloss = (Estado, Textures,Armas)
 
 
-estadoGlossInicial :: Textures -> EstadoGloss
-estadoGlossInicial textures = (estadoInicial, textures)
+
+estadoGlossInicial :: Textures -> Armas ->EstadoGloss
+estadoGlossInicial textures armas = (estadoInicial, textures,armas)
 
 reageEventoGloss :: Event -> EstadoGloss -> EstadoGloss
 reageEventoGloss _ s = s
@@ -61,15 +64,44 @@ desenhaMapa x y (h:t) textures = linha ++ resto
                   resto = desenhaMapa x (y-l) t textures
 desenhaMapa _ _ _ _             = []
 
+drawJogadores :: [Jogador] -> Armas -> [Picture]
+drawJogadores ((Jogador _ _ 0 _ _ _):xs) armas     = drawJogadores xs armas
+drawJogadores ((Jogador (i,j) d _ _ _ a):xs) armas = (drawJogador i j d a armas): (drawJogadores xs armas)
+drawJogadores _ _                                  = []
+
+drawJogador :: Int -> Int -> Direcao -> Guns -> Armas -> Picture
+drawJogador i j d arma armas = (Translate (realPlayerX j) (realPlayerY i)
+                               . Rotate degrees) imagem 
+  where imagem    = (fromJust . lookup arma) armas
+        degrees   = convDirToDegree d
+
+realPlayerX :: Int -> Float
+realPlayerX = (+ comprimento)
+              . (*l)
+              . realToFrac
+              . succ
+
+realPlayerY :: Int -> Float
+realPlayerY = (+ altura)
+              . (* (-l))
+              . realToFrac 
+
 
 
 desenhaEstadoGloss :: EstadoGloss -> Picture
-desenhaEstadoGloss (estado,textures) = Pictures drawMapa
-                   where drawMapa    =  desenhaMapa comprimento altura mapa textures
+desenhaEstadoGloss (estado,textures,armas) = Pictures draw
+                   where draw        =  drawMapa
+                                     ++ drawPlayers 
+                         drawMapa    =  desenhaMapa comprimento altura mapa textures
                          mapa        =  getMapa estado 
+                         drawPlayers =  drawJogadores players armas
+                         players     = ( take 1 
+                                       . getPlayers) estado
+
 
 chao :: Picture
 chao = Color black (Polygon [(0,0),(l,0),(l,l),(0,l),(0,0)])
+
 
 
 main :: IO()
@@ -79,12 +111,11 @@ main = do
     cferreos <- loadBMP "img/cferreos.bmp"
     guarda <- loadBMP "img/guarda.bmp"
     semaforo <- loadBMP "img/semafro.bmp"
- --   water <- loadBMP "img/agua.bmp"
     cancela <- loadBMP "img/cancela.bmp"
-    --banheira <- loadBMP "img/banheira.bmp"
     Just caminho <- loadJuicy "img/original.bmp"
     Just passeio <- loadJuicy "img/original2.bmp"
-   -- caminhooo <- loadBMP "img/shiki3.bmp"
+    guitarra <- loadBMP "img/guitarra.bmp"
+    camera <- loadBMP "img/camara.bmp"
     play dm
          black
          fr
@@ -97,15 +128,13 @@ main = do
               (Bloco Semaforo, ((Scale 0.25 0.25 semaforo), (6.25,6.25))),
               (Railway, ((Scale 0.3 0.3 cferreos), (6.25,6.25))),
               (Umbrella, ((Scale 0.9 0.8 guarda), (6.25,6.25))),
-   --           (Agua, ((Scale 0.5 0.5 water), (6.25,6.25))),
               (Bloco Caminho, ((Scale 1 1 caminho), (1.25, 1.25))),
               (Bloco Passeio, ((Scale 1 1 passeio), (1.25, 1.25)))
-    --          (Bloco Caminhooo, ((Scale 1 1 caminhooo), (6.25, 6.25))),
-  --            (Banheira, ((Scale 0.24 0.25 banheira),(6.25 , 6.25))) 
-            ]
+             ]
+             [ (Guitar, guitarra),
+               (Camera, camera) 
+             ]
          )
          desenhaEstadoGloss
          reageEventoGloss
          reageTempoGloss
-
-

@@ -45,7 +45,11 @@ data Peca
 data Jogador = Jogador
     { posicaoJogador :: PosicaoGrelha   
     , direcaoJogador :: Direcao         
-    , vidasJogador   :: Int         
+    , vidasJogador   :: Int
+    , lasersJogador  :: Int
+    , choquesJogador :: Int
+    , armaJogador    :: Guns
+         
     }
   deriving (Read,Show,Eq)
 
@@ -62,3 +66,5 @@ data Jogada
     | None
   deriving (Read,Show,Eq)
 
+data Guns = Camera | Guitar
+    deriving (Read,Show,Eq,Enum,Bounded)
